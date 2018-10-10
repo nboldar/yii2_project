@@ -1,2 +1,2 @@
-<h1><?=$greeting?></h1>
-<p> <?=$hello?></p>
+<h1><?= $greeting ?></h1>
+<p> <?= $hello ?></p>

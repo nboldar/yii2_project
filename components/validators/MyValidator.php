@@ -15,9 +15,9 @@ class MyValidator extends Validator
 {
     public function validateAttribute($model, $attribute)
     {
-        $attributeValue=$model->$attribute;
-        if(!is_string($attributeValue)){
-            $this->addError($model,$attribute, 'Значения должны быть строкой');
+        $attributeValue = $model->$attribute;
+        if (!is_string($attributeValue)) {
+            $this->addError($model, $attribute, 'Значения должны быть строкой');
         }
     }
 

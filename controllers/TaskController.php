@@ -21,12 +21,12 @@ class TaskController extends Controller
         $model = new Task();
         $model->greeting = 'fghjk';
         $model->sayHello = '...here is "Hello, world"';
-        if($model->validate()){
+        if ($model->validate()) {
             $params = [
                 'greeting' => $model->greeting,
                 'hello' => $model->sayHello
             ];
-        }else{
+        } else {
             $params = [
                 'greeting' => $model->getFirstError('greeting'),
                 'hello' => $model->getErrors()[0]
