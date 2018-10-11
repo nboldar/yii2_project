@@ -19,20 +19,12 @@ class TaskController extends Controller
     public function actionIndex()
     {
         $model = new Task();
-        $model->greeting = 'fghjk';
-        $model->sayHello = '...here is "Hello, world"';
-        if ($model->validate()) {
-            $params = [
-                'greeting' => $model->greeting,
-                'hello' => $model->sayHello
-            ];
-        } else {
-            $params = [
-                'greeting' => $model->getFirstError('greeting'),
-                'hello' => $model->getErrors()[0]
-            ];
-
-        }
+        $model->greeting = 'Congratulations!!!!';
+        $model->sayHello = 'hello world';
+        $model->validate('greeting') ? $params['greeting'] = $model->greeting
+            : $params['greeting'] = $model->getFirstError('greeting');
+        $model->validate('sayHello') ? $params['hello'] = $model->sayHello
+            : $params['hello'] = $model->getFirstError('sayHello');
 
         return $this->render('task', $params);
     }
