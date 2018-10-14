@@ -19,8 +19,7 @@ class Task extends Model
     public function rules()
     {
         return [
-            [['greeting',], 'app\\components\\validators\\MyValidator'],
-            [[ 'sayHello'], 'app\\components\\validators\\MyValidator'],
+            [['greeting', 'sayHello'], 'app\\components\\validators\\MyValidator'],
         ];
     }
 
