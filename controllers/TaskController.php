@@ -15,10 +15,21 @@ use yii\web\Controller;
 class TaskController extends Controller
 {
 
-
     public function actionIndex()
     {
-        $tasks = Tasks::find()->asArray()->all();
+        $month = date('n');
+        $year = date('Y');
+        $firstDay = '01';
+        $lastDay = date('t');
+        $firstDayOfMonth = $year . '-' . $month . '-' . $firstDay;
+        $lastDayOfMonth = $year . '-' . $month . '-' . $lastDay;
+
+        $tasks = Tasks::find()
+            ->where(['between', 'start', $firstDayOfMonth, $lastDayOfMonth])
+            ->asArray()
+            ->all();
         return $this->render('task', ['tasks' => $tasks]);
     }
+
+
 }

@@ -43,8 +43,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public static function findByUsername($username)
     {
-        return static::findOne(['username'=>$username]);
+        return static::findOne(['username' => $username]);
     }
+
     public function validatePassword($password)
     {
 
