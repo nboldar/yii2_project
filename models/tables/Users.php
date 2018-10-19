@@ -3,7 +3,7 @@
 namespace app\models\tables;
 
 use Yii;
-use yii\web\IdentityInterface;
+
 
 /**
  * This is the model class for table "users".
@@ -14,44 +14,8 @@ use yii\web\IdentityInterface;
  * @property string $authKey
  * @property string $accessToken
  */
-class User extends \yii\db\ActiveRecord implements IdentityInterface
+class Users extends \yii\db\ActiveRecord
 {
-    public static function findIdentity($id)
-    {
-        return static::findOne($id);
-    }
-
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        return static::findOne([’accessToken’ => $token]);
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    public function validateAuthKey($authKey)
-    {
-        return $this->getAuthKey() === $authKey;
-    }
-
-    public static function findByUsername($username)
-    {
-        return static::findOne(['username' => $username]);
-    }
-
-    public function validatePassword($password)
-    {
-
-        return $this->password === $password;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -84,5 +48,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'authKey' => 'Auth Key',
             'accessToken' => 'Access Token',
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        $password = $this->getAttribute('password');
+        $hash = Yii::$app->getSecurity()->generatePasswordHash($password);
+        $this->setAttribute('password', $hash);
+        return parent::beforeSave($insert);
     }
 }
