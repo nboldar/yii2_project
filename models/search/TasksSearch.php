@@ -64,6 +64,7 @@ class TasksSearch extends Tasks
             'start' => $this->start,
             'finish' => $this->finish,
             'done' => $this->done,
+            'created_at'=>$this->created_at,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

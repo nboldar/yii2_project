@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\tables\Tasks;
 use app\models\search\TasksSearch;
+use yii\base\Event;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -64,8 +65,8 @@ class AdminTasksController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Tasks();
 
+        $model = new Tasks();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }

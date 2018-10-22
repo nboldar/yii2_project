@@ -3,6 +3,7 @@
 namespace app\models\tables;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 
 /**
@@ -13,6 +14,9 @@ use Yii;
  * @property string $password
  * @property string $authKey
  * @property string $accessToken
+ * @property int $created_at
+ * @property int updated_at
+ * @property string $email
  */
 class Users extends \yii\db\ActiveRecord
 {
@@ -33,6 +37,7 @@ class Users extends \yii\db\ActiveRecord
             [['username', 'password', 'authKey', 'accessToken'], 'required'],
             [['username', 'password', 'authKey', 'accessToken'], 'string', 'max' => 255],
             [['username'], 'unique'],
+            [['email'], 'email'],
         ];
     }
 
@@ -47,6 +52,13 @@ class Users extends \yii\db\ActiveRecord
             'password' => 'Password',
             'authKey' => 'Auth Key',
             'accessToken' => 'Access Token',
+            'email'=>'Email'
+        ];
+    }
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
         ];
     }
 

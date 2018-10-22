@@ -93,7 +93,6 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-//        var_dump($password);exit;
         return \Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
 }
