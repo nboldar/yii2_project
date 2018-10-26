@@ -1,6 +1,6 @@
-<?php //var_dump($tasks[0]); exit; ?>
-<!--<p>--><? //=$tasks[0]['title']?><!--</p>-->
+<?php //var_dump($tasks); exit;?>
 <?php foreach ($tasks as $task): ?>
+<div>cerf ,kzlm</div>
     <div class="card">
         <h3>№<?= $task['id'] ?>) <?= $task['title'] ?></h3>
         <p><?= $task['description'] ?></p>

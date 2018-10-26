@@ -2,15 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\RegistrationForm;
 use Yii;
+use yii\caching\DbDependency;
 use yii\filters\AccessControl;
+use yii\filters\PageCache;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\tables\Users;
+use app\models\tables\Tasks;
 
 class SiteController extends Controller
 {
@@ -37,6 +39,16 @@ class SiteController extends Controller
                     'logout' => ['post'],
                     'sighUp' => ['post'],
                 ],
+            ],
+            'cache'=>[
+                'class'=>PageCache::className(),
+                'only'=>['personal'],
+                'duration'=>3600,
+                'dependency'=>[
+                    'class'=>DbDependency::className(),
+                    'sql'=>"select * from tasks",
+                ],
+
             ],
         ];
     }
@@ -91,6 +103,26 @@ class SiteController extends Controller
         return $this->render('registration', ['model' => $user]);
     }
 
+    public function actionPersonal()
+    {
+        $user = Yii::$app->user->getIdentity();
+//        $username = $user->username;
+        $user_id=$user->id;
+        $month = date('n');
+        $year = date('Y');
+        $firstDay = '01';
+        $lastDay = date('t');
+        $firstDayOfMonth = $year . '-' . $month . '-' . $firstDay;
+        $lastDayOfMonth = $year . '-' . $month . '-' . $lastDay;
+        $tasks = Tasks::find()
+            ->where(['between', 'start', $firstDayOfMonth, $lastDayOfMonth])
+            ->andWhere(['user_id' => $user_id])
+            ->asArray()
+            ->all();
+        $this->layout='personal';
+        return $this->render('@app/views/task/task.php', ['tasks' => $tasks]);
+    }
+
     /**
      * Login action.
      *
@@ -104,7 +136,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect('/index.php?r=site/personal');
         }
 
         $model->password = '';
