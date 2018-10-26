@@ -19,7 +19,7 @@ class MailBehavior extends Behavior
 
     public function sendMail()
     {
-        $emailTo=Users::findOne($this->owner->user_id)->email;
+        $emailTo=Users::findOne($this->owner->user_id)['email'];
         $emailFrom=Yii::$app->params['adminEmail'];
         $title=$this->owner->title;
         $body=$this->owner->description;

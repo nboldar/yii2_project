@@ -12,14 +12,17 @@ use yii\behaviors\TimestampBehavior;
  * @property int $id
  * @property string $username
  * @property string $password
+ * @property string $passsword_repeat
  * @property string $authKey
  * @property string $accessToken
  * @property int $created_at
- * @property int updated_at
+ * @property int $updated_at
  * @property string $email
  */
+
 class Users extends \yii\db\ActiveRecord
 {
+    public $password_repeat;
     /**
      * {@inheritdoc}
      */
@@ -34,9 +37,10 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password', 'authKey', 'accessToken'], 'required'],
+            [['username', 'password',], 'required'],
             [['username', 'password', 'authKey', 'accessToken'], 'string', 'max' => 255],
-            [['username'], 'unique'],
+            [['password_repeat'], 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match"],
+            [['username','email'], 'unique'],
             [['email'], 'email'],
         ];
     }

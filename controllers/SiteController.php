@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\RegistrationForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -9,6 +10,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\tables\Users;
 
 class SiteController extends Controller
 {
@@ -33,6 +35,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'sighUp' => ['post'],
                 ],
             ],
         ];
@@ -62,6 +65,30 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionRegistration()
+    {
+        $model = new Users();
+
+        return $this->render('registration', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionSighup()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $params = Yii::$app->request->post();
+        $user = new Users();
+        if ($user->load($params) && $user->validate()) {
+            if ($user->save()) {
+                return $this->redirect(['login']);
+            }
+        }
+        return $this->render('registration', ['model' => $user]);
     }
 
     /**
