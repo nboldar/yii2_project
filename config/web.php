@@ -11,13 +11,37 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
+    'language' => 'en',
     'components' => [
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'class' => 'app\widgets\multylang\components\UrlManager',
+            'languages' => ['ru', 'en'],
+            'enableDefaultLanguageUrlCode' => true,
+            'rules'=>[
+                '/' => 'site/index',
+                '<controller:\w+>/<action:\w+>/'=>'<controller>/<action>',
+            ],
+        ],
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en-US',
+//                    'fileMap' => [
+//                        'app' => 'app.php',
+//                    ],
+                ],
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Kh2LoDilvNH-ii8Fom-YWZgfBLkhzGDx',
         ],
         'cache' => [
-            'class' => 'yii\caching\MemCache',
+            'class' => yii\caching\FileCache::className(),
         ],
         'user' => [
             'identityClass' => 'app\models\User',

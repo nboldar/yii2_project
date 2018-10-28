@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\widgets\Alert;
@@ -9,6 +10,8 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\helpers\Url;
+use app\widgets\multylang\MultiLang;
 
 AppAsset::register($this);
 ?>
@@ -29,7 +32,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => \Yii::t('app', 'application'),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -39,18 +42,19 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
 
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'Task', 'url' => ['/task']],
-            ['label' => 'Sign Up', 'url' => ['/site/registration']],
+            ['label' => \Yii::t('app', 'home'), 'url' => ['/site/index']],
+            ['label' => \Yii::t('app', 'about'), 'url' => ['/site/about']],
+            ['label' => \Yii::t('app', 'contact'), 'url' => ['/site/contact']],
+            ['label' => \Yii::t('app', 'tasks'), 'url' => ['/task']],
+            MultiLang::widget(['cssClass'=>'navbar-right language']),
+            ['label' => \Yii::t('app', 'sighup'), 'url' => ['/site/registration']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+            ['label' => \Yii::t('app', 'login'), 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    \Yii::t('app', 'logout'). '(' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
@@ -63,6 +67,7 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
+    <?php echo MultiLang::widget(['cssClass'=>'pull-right language']); ?>
 
     <div class="container">
         <?= Breadcrumbs::widget([
@@ -75,7 +80,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?=\Yii::t('app', 'company_name')?> <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
 <div class="site-personal">
     <h1><?= Html::encode($this->title) ?></h1>
-    <p>Hello ! Here is your tasks:</p>
+    <p>Hello <?php \Yii::$app->params['username']?>! Here is your tasks:</p>
     <div>
         <?= $content ?>
         <!--        --><?php //$this->render('@app/views/task/task.php',['tasks'=>$tasks]) ?>

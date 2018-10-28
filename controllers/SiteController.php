@@ -40,16 +40,16 @@ class SiteController extends Controller
                     'sighUp' => ['post'],
                 ],
             ],
-            'cache'=>[
-                'class'=>PageCache::className(),
-                'only'=>['personal'],
-                'duration'=>3600,
-                'dependency'=>[
-                    'class'=>DbDependency::className(),
-                    'sql'=>"select * from tasks",
-                ],
+//            'cache'=>[
+//                'class'=>PageCache::className(),
+//                'only'=>['personal'],
+//                'duration'=>3600,
+//                'dependency'=>[
+//                    'class'=>DbDependency::className(),
+//                    'sql'=>"select * from tasks",
+//                ],
 
-            ],
+//            ],
         ];
     }
 
@@ -106,7 +106,8 @@ class SiteController extends Controller
     public function actionPersonal()
     {
         $user = Yii::$app->user->getIdentity();
-//        $username = $user->username;
+
+        Yii::$app->params['username']=$user->username;
         $user_id=$user->id;
         $month = date('n');
         $year = date('Y');
@@ -120,7 +121,7 @@ class SiteController extends Controller
             ->asArray()
             ->all();
         $this->layout='personal';
-        return $this->render('@app/views/task/task.php', ['tasks' => $tasks]);
+        return $this->render('@app/views/task/task.php', ['tasks' => $tasks,]);
     }
 
     /**
