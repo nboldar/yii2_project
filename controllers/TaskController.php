@@ -12,6 +12,7 @@ namespace app\controllers;
 use app\models\tables\Tasks;
 use app\models\User;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 
 class TaskController extends Controller
 {
@@ -24,12 +25,24 @@ class TaskController extends Controller
         $lastDay = date('t');
         $firstDayOfMonth = $year . '-' . $month . '-' . $firstDay;
         $lastDayOfMonth = $year . '-' . $month . '-' . $lastDay;
-
+        $model = new Tasks();
         $tasks = Tasks::find()
             ->where(['between', 'start', $firstDayOfMonth, $lastDayOfMonth])
             ->asArray()
             ->all();
-        return $this->render('task', ['tasks' => $tasks]);
+        return $this->render('task', ['tasks' => $tasks, 'model' => $model]);
+    }
+
+    public function actionUpload()
+    {
+        if (\Yii::$app->request->isPost) {
+            $id = \Yii::$app->request->getBodyParam('task_id');
+            $model = Tasks::findOne(['id' => $id]);
+            $model->image=UploadedFile::getInstance($model, 'image');
+            $model->upload();
+        }
+
+        return $this->redirect(\Yii::$app->request->getReferrer());
     }
 
 

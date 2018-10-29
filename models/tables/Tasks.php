@@ -6,6 +6,8 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii\db\ActiveRecord;
+use yii\imagine\Image;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "tasks".
@@ -19,10 +21,16 @@ use yii\db\ActiveRecord;
  * @property int $done
  * @property int $created_at
  * @property int $updated_at
- *
+ * @property string $imageSmall
+ * @property string $imageBig
  */
-class Tasks extends \yii\db\ActiveRecord
+class Tasks extends ActiveRecord
 {
+    /**
+     * @var UploadedFile
+     */
+    public $image;
+
     /**
      * {@inheritdoc}
      */
@@ -37,14 +45,15 @@ class Tasks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'user_id', 'start', 'finish'], 'required'],
-            [['description'], 'string'],
+            [['title', 'user_id', 'start', 'finish',], 'required'],
+            [['description', 'imageSmall', 'imageBig'], 'string'],
             [['user_id', 'done'], 'integer'],
             [['start', 'finish'], 'safe'],
             [['title'], 'string', 'max' => 100],
+            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'jpg,png'],
+
         ];
     }
-
     /**
      * {@inheritdoc}
      */
@@ -58,8 +67,8 @@ class Tasks extends \yii\db\ActiveRecord
             'start' => 'Start',
             'finish' => 'Finish',
             'done' => 'Done',
-            'created_at'=>'Created at',
-            'updated_at'=>'Updated at'
+            'created_at' => 'Created at',
+            'updated_at' => 'Updated at'
         ];
     }
 
@@ -74,9 +83,26 @@ class Tasks extends \yii\db\ActiveRecord
                 ],
                 'value' => date('Y-m-d H:i:s'),
             ],
-            'mail'=>[
-                'class'=>'app\behaviors\MailBehavior',
+            'mail' => [
+                'class' => 'app\behaviors\MailBehavior',
             ]
         ];
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $basename = $this->image->getBaseName() . "." . $this->image->getExtension();
+            $filename='@webroot/img/'.$basename;
+            $smallFilename='@webroot/img/small/'.$basename;
+            $bigImagePath='/img/'.$basename;
+            $smallImagePath='/img/small/'.$basename;
+            $this->imageBig=$bigImagePath;
+            $this->imageSmall=$smallImagePath;
+            $this->image->saveAs(Yii::getAlias($filename));
+            Image::thumbnail($filename, 100, 80)->save(Yii::getAlias($smallFilename));
+            $this->save($runValidation = false);
+        }
+        return false;
     }
 }

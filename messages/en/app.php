@@ -25,5 +25,6 @@ return [
     'Verification Code'=>'Verification Code',
     'submit'=>'Submit',
     'company_name'=>'My company',
-    'contact_thanks'=>'Thank you for contacting us. We will respond to you as soon as possible.'
+    'contact_thanks'=>'Thank you for contacting us. We will respond to you as soon as possible.',
+    'upload'=>'Upload img',
 ];
