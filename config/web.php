@@ -13,7 +13,11 @@ $config = [
         '@npm' => '@vendor/npm-asset',
     ],
     'language' => 'en',
+    'modules'=>[
+        'admin'=>'app\modules\admin\Admin',
+    ],
     'components' => [
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,

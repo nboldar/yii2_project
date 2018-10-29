@@ -1,19 +1,18 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\tables\Tasks;
-use app\models\search\TasksSearch;
-use yii\base\Event;
+use app\models\tables\Users;
+use app\modules\admin\models\search\UsersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AdminTasksController implements the CRUD actions for Tasks model.
+ * UsersController implements the CRUD actions for Users model.
  */
-class AdminTasksController extends Controller
+class UsersController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,12 +30,12 @@ class AdminTasksController extends Controller
     }
 
     /**
-     * Lists all Tasks models.
+     * Lists all Users models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TasksSearch();
+        $searchModel = new UsersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class AdminTasksController extends Controller
     }
 
     /**
-     * Displays a single Tasks model.
+     * Displays a single Users model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,14 +58,14 @@ class AdminTasksController extends Controller
     }
 
     /**
-     * Creates a new Tasks model.
+     * Creates a new Users model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
+        $model = new Users();
 
-        $model = new Tasks();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -77,7 +76,7 @@ class AdminTasksController extends Controller
     }
 
     /**
-     * Updates an existing Tasks model.
+     * Updates an existing Users model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -97,7 +96,7 @@ class AdminTasksController extends Controller
     }
 
     /**
-     * Deletes an existing Tasks model.
+     * Deletes an existing Users model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -111,15 +110,15 @@ class AdminTasksController extends Controller
     }
 
     /**
-     * Finds the Tasks model based on its primary key value.
+     * Finds the Users model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Tasks the loaded model
+     * @return Users the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Tasks::findOne($id)) !== null) {
+        if (($model = Users::findOne($id)) !== null) {
             return $model;
         }
 

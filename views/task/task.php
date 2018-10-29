@@ -19,7 +19,7 @@ use yii\bootstrap\Modal;
                 'header' => "<h2>{$task['title']}</h2>",
                 'toggleButton' => ['label' => 'увеличить фото'],
                 'size' => 'modal-lg',
-                'options'=>['style'=>'min-width:700px'],
+                'options' => ['style' => 'min-width:700px'],
             ]);
 
             echo "<img src='{$task['imageBig']}'/>";
