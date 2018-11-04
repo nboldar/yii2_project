@@ -25,14 +25,14 @@ class TaskcheckController extends Controller
                 array_push($userIds, $task['user_id']);
             }
         }
-        foreach ($userIds as $userId) {
-            $user = Users::findOne($userId);
+        $users=Users::findAll($userIds);
+        foreach ($users as $user) {
             $userEmail = $user->getAttribute('email');
             $textHtmlBody = "<h1>Уважаемый {$user->getAttribute('login')}! </h1>"
                 . "<p>Сроки по следующим задачам: </p>";
             $i = 1;
             foreach ($tasks as $task) {
-                if ($userId == $task['user_id']) {
+                if ($user->getAttribute('id') == $task['user_id']) {
                     $textHtmlBody .= "<p>{$i}) {$task['title']};</p>";
                     ++$i;
                 }
