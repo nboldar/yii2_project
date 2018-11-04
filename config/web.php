@@ -12,7 +12,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
-    'language' => 'en',
+    'language' => 'en-US',
     'modules'=>[
         'admin'=>'app\modules\admin\Admin',
     ],
@@ -22,8 +22,8 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'class' => 'app\widgets\multylang\components\UrlManager',
-            'languages' => ['ru', 'en'],
-            'enableDefaultLanguageUrlCode' => true,
+            'languages' => ['en', 'ru'],
+            'enableDefaultLanguageUrlCode' => false,
             'rules'=>[
                 '/' => 'site/index',
                 '<controller:\w+>/<action:\w+>/'=>'<controller>/<action>',
@@ -34,10 +34,10 @@ $config = [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@app/messages',
-                    'sourceLanguage' => 'en-US',
-//                    'fileMap' => [
-//                        'app' => 'app.php',
-//                    ],
+//                    'sourceLanguage' => 'en',
+                    'fileMap' => [
+                        'app' => 'app.php',
+                    ],
                 ],
             ],
         ],

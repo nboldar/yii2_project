@@ -115,13 +115,14 @@ class SiteController extends Controller
         $lastDay = date('t');
         $firstDayOfMonth = $year . '-' . $month . '-' . $firstDay;
         $lastDayOfMonth = $year . '-' . $month . '-' . $lastDay;
+        $model= new Tasks();
         $tasks = Tasks::find()
             ->where(['between', 'start', $firstDayOfMonth, $lastDayOfMonth])
             ->andWhere(['user_id' => $user_id])
             ->asArray()
             ->all();
         $this->layout='personal';
-        return $this->render('@app/views/task/task.php', ['tasks' => $tasks,]);
+        return $this->render('@app/views/task/task.php', ['tasks' => $tasks,'model'=>$model]);
     }
 
     /**
@@ -137,7 +138,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('/index.php?r=site/personal');
+            return $this->redirect('/index.php/site/personal');
         }
 
         $model->password = '';

@@ -26,10 +26,13 @@ class TaskController extends Controller
         $firstDayOfMonth = $year . '-' . $month . '-' . $firstDay;
         $lastDayOfMonth = $year . '-' . $month . '-' . $lastDay;
         $model = new Tasks();
-        $tasks = Tasks::find()
-            ->where(['between', 'start', $firstDayOfMonth, $lastDayOfMonth])
-            ->asArray()
-            ->all();
+        $tasks =Tasks::find()->all();
+
+//            Tasks::find()
+//            ->where(['between', 'start', $firstDayOfMonth, $lastDayOfMonth])
+//            ->asArray()
+//            ->all();
+//        var_dump($tasks);exit;
         return $this->render('task', ['tasks' => $tasks, 'model' => $model]);
     }
 

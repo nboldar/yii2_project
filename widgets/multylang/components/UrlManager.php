@@ -160,6 +160,7 @@ class UrlManager extends BaseUrlManager
      */
     public function init()
     {
+
         if ($this->enableLocaleUrls && $this->languages) {
             if (!$this->enablePrettyUrl) {
                 throw new InvalidConfigException('Locale URL support requires enablePrettyUrl to be set to true.');
@@ -321,6 +322,7 @@ class UrlManager extends BaseUrlManager
     protected function processLocaleUrl($normalized)
     {
         $pathInfo = $this->_request->getPathInfo();
+
         $parts = [];
         foreach ($this->languages as $k => $v) {
             $value = is_string($k) ? $k : $v;
@@ -470,6 +472,7 @@ class UrlManager extends BaseUrlManager
                 }
             }
         }
+       // var_dump($_SERVER[$this->geoIpServerVar]);exit;
         if (isset($_SERVER[$this->geoIpServerVar])) {
             foreach ($this->geoIpLanguageCountries as $key => $codes) {
                 $country = $_SERVER[$this->geoIpServerVar];

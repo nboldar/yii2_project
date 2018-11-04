@@ -68,6 +68,7 @@ class TasksController extends Controller
 
         $model = new Tasks();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -86,11 +87,12 @@ class TasksController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+   //     var_dump($model);exit;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
