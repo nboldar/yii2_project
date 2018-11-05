@@ -2,10 +2,22 @@
 
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Modal;
+use yii\helpers\Html;
+use Yii;
 
 ?>
+<?php
+if (Yii::$app->user->can('createTask')) {
+    echo Html::beginForm(['/admin/tasks/create/'], 'get');
+    echo Html::submitButton(
+        \Yii::t('app', 'createTask'),
+        ['class' => 'btn btn-link btn-lg']
+    );
+    echo Html::endForm();
+}
+?>
 <?php foreach ($tasks as $task): ?>
-    <div>cerf ,kzlm</div>
+
     <div class="card">
         <h3>№<?= $task['id'] ?>) <?= $task['title'] ?></h3>
         <p><?= $task['description'] ?></p>

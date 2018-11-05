@@ -46,7 +46,7 @@ AppAsset::register($this);
             ['label' => \Yii::t('app', 'about'), 'url' => ['/site/about']],
             ['label' => \Yii::t('app', 'contact'), 'url' => ['/site/contact']],
             ['label' => \Yii::t('app', 'tasks'), 'url' => ['/task']],
-            MultiLang::widget(['cssClass'=>'navbar-right language']),
+            MultiLang::widget(['cssClass' => 'navbar-right language']),
             ['label' => \Yii::t('app', 'sighup'), 'url' => ['/site/registration']],
             Yii::$app->user->isGuest ? (
             ['label' => \Yii::t('app', 'login'), 'url' => ['/site/login']]
@@ -54,12 +54,15 @@ AppAsset::register($this);
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    \Yii::t('app', 'logout'). '(' . Yii::$app->user->identity->username . ')',
+                    \Yii::t('app', 'logout') . '(' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
                 . '</li>'
             ),
+            Yii::$app->user->can('adminAll') ?
+                (['label' => \Yii::t('app', 'admin'), 'url' => ['/admin']])
+                : ['label' => ''],
 
         ],
 
@@ -67,12 +70,14 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
-    <?php echo MultiLang::widget(['cssClass'=>'pull-right language']); ?>
+    <!--    --><?php //echo MultiLang::widget(['cssClass' => 'pull-right language']); ?>
 
     <div class="container">
+
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
@@ -80,7 +85,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?=\Yii::t('app', 'company_name')?> <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?= \Yii::t('app', 'company_name') ?> <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

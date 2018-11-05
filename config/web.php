@@ -8,25 +8,27 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
-        '@webroot'=>'@app/web',
+        '@webroot' => '@app/web',
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
     'language' => 'en-US',
-    'modules'=>[
-        'admin'=>'app\modules\admin\Admin',
+    'modules' => [
+        'admin' => 'app\modules\admin\Admin',
     ],
     'components' => [
-
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'class' => 'app\widgets\multylang\components\UrlManager',
             'languages' => ['en', 'ru'],
             'enableDefaultLanguageUrlCode' => false,
-            'rules'=>[
+            'rules' => [
                 '/' => 'site/index',
-                '<controller:\w+>/<action:\w+>/'=>'<controller>/<action>',
+                '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
         ],
         'i18n' => [

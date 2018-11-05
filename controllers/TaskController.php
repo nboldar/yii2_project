@@ -36,6 +36,7 @@ class TaskController extends Controller
         return $this->render('task', ['tasks' => $tasks, 'model' => $model]);
     }
 
+
     public function actionUpload()
     {
         if (\Yii::$app->request->isPost) {

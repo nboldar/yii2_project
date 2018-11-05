@@ -27,4 +27,6 @@ return [
     'company_name'=>'My company',
     'contact_thanks'=>'Thank you for contacting us. We will respond to you as soon as possible.',
     'upload'=>'Upload img',
+    'admin'=>'Admin',
+    'createTask'=>'Create new Task',
 ];

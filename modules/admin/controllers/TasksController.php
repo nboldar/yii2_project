@@ -67,9 +67,13 @@ class TasksController extends Controller
     {
 
         $model = new Tasks();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+            if (Yii::$app->user->can('adminAll')) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->redirect(['//task/']);
+            }
 
-            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -87,7 +91,7 @@ class TasksController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-   //     var_dump($model);exit;
+        //     var_dump($model);exit;
 
         if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
 
