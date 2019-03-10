@@ -17,6 +17,8 @@ class RbacController extends Controller
         $authManager->assign($productManager, 111);
 
         $permissionCreate = $authManager->getPermission('createTask');
+        $permissionDelete = $authManager->getPermission('deleteTask');
+        $permissionEdit = $authManager->getPermission('editTask');
 
         $authManager->addChild($productManager, $permissionCreate);
     }

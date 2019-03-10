@@ -3,11 +3,11 @@
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
-use Yii;
+//use Yii;
 
 ?>
 <?php
-if (Yii::$app->user->can('createTask')) {
+if (\Yii::$app->user->can('createTask')) {
     echo Html::beginForm(['/admin/tasks/create/'], 'get');
     echo Html::submitButton(
         \Yii::t('app', 'createTask'),
